@@ -1,0 +1,68 @@
+name: Build SpotifyXbox APPX
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore src/SpotifyXbox.csproj
+
+      - name: Build
+        run: dotnet build src/SpotifyXbox.csproj -p:Platform=x64 -p:Configuration=Release
+
+      - name: Locate makeappx
+        shell: powershell
+        run: |
+          $sdk = Get-ChildItem "C:\Program Files (x86)\Windows Kits\10\bin" -Directory |
+                Sort-Object Name -Descending | Select-Object -First 1
+          echo "MAKEAPPX=$($sdk.FullName)\x64\makeappx.exe" >> $env:GITHUB_ENV
+          echo "SIGNTOOL=$($sdk.FullName)\x64\signtool.exe" >> $env:GITHUB_ENV
+
+      - name: Create self-signed cert
+        shell: powershell
+        run: |
+          $pwd2 = ConvertTo-SecureString -String "sudoxd" -Force -AsPlainText
+          New-SelfSignedCertificate -Type Custom -Subject "CN=SudoXD" `
+            -KeyUsage DigitalSignature -FriendlyName "SudoXD Dev" `
+            -CertStoreLocation "Cert:\CurrentUser\My" `
+            -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}")
+          $cert = Get-ChildItem Cert:\CurrentUser\My | Where-Object Subject -eq "CN=SudoXD"
+          Export-Certificate -Cert $cert -FilePath sudoxd.cer
+          $certPath = "Cert:\CurrentUser\My\" + $cert.Thumbprint
+          Export-PfxCertificate -Cert $certPath -FilePath sudoxd.pfx -Password $pwd2
+
+      - name: Package APPX
+        shell: pwsh
+        run: |
+          $bin = "src/bin/x64/Release/net10.0-windows10.0.22621.0/win-x64"
+          # copia o manifest e assets pra pasta do bin
+          Copy-Item src/Package.appxmanifest $bin/
+          New-Item -ItemType Directory -Force -Path "$bin/Assets"
+          Copy-Item assets/*.png "$bin/Assets/"
+          & $env:MAKEAPPX pack /d $bin /p SpotifyXbox.appx /o
+
+      - name: Sign APPX
+        shell: pwsh
+        run: |
+          $pwd2 = ConvertTo-SecureString -String "sudoxd" -Force -AsPlainText
+          & $env:SIGNTOOL sign /fd SHA256 /f sudoxd.pfx /p sudoxd SpotifyXbox.appx
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SpotifyXbox-APPX
+          path: |
+            SpotifyXbox.appx
+            sudoxd.cer

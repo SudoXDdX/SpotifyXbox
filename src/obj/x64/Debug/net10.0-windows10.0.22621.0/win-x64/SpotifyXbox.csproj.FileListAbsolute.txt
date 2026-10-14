@@ -1,0 +1,5 @@
+/data/data/com.termux/files/home/glm/xbox-spotify/src/obj/x64/Debug/net10.0-windows10.0.22621.0/win-x64/SpotifyXbox.GeneratedMSBuildEditorConfig.editorconfig
+/data/data/com.termux/files/home/glm/xbox-spotify/src/obj/x64/Debug/net10.0-windows10.0.22621.0/win-x64/SpotifyXbox.AssemblyInfoInputs.cache
+/data/data/com.termux/files/home/glm/xbox-spotify/src/obj/x64/Debug/net10.0-windows10.0.22621.0/win-x64/SpotifyXbox.AssemblyInfo.cs
+/data/data/com.termux/files/home/glm/xbox-spotify/src/obj/x64/Debug/net10.0-windows10.0.22621.0/win-x64/SpotifyXbox.csproj.CoreCompileInputs.cache
+/data/data/com.termux/files/home/glm/xbox-spotify/src/obj/x64/Debug/net10.0-windows10.0.22621.0/win-x64/SpotifyXbox.csproj.AssemblyReference.cache

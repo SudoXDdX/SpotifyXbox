@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows10.0.22621.0</TargetFramework>
+    <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.22621.0</TargetPlatformVersion>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>SpotifyXbox</RootNamespace>
+    <Platforms>x64</Platforms>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <UseWinUI>false</UseWinUI>
+    <LangVersion>latest</LangVersion>
+    <!-- sem manifest aqui: o Package.appxmanifest entra no APPX na hora do
+         empacotamento manual (makeappx). O build gera so' o exe+deps. -->
+    <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
+  </PropertyGroup>
+</Project>

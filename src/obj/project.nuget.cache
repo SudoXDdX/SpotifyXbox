@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "gTguLC+peCg=",
+  "success": true,
+  "projectFilePath": "/data/data/com.termux/files/home/glm/xbox-spotify/src/SpotifyXbox.csproj",
+  "expectedPackageFiles": [
+    "/data/data/com.termux/files/home/.nuget/packages/microsoft.windowsdesktop.app.ref/10.0.13/microsoft.windowsdesktop.app.ref.10.0.13.nupkg.sha512",
+    "/data/data/com.termux/files/home/.nuget/packages/microsoft.netcore.app.host.win-x64/10.0.13/microsoft.netcore.app.host.win-x64.10.0.13.nupkg.sha512",
+    "/data/data/com.termux/files/home/.nuget/packages/microsoft.windows.sdk.net.ref/10.0.22621.57/microsoft.windows.sdk.net.ref.10.0.22621.57.nupkg.sha512"
+  ],
+  "logs": []
+}
