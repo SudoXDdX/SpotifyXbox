@@ -41,19 +41,12 @@
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" />
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
-      <Extensions>
-        <!-- background audio: media player reconhecido pelo sistema.
-             A categoria backgroundTasks e' do namespace uap (schema validation
-             do makeappx rejeita em uap5 no TFM 22621). Task Type="audio" e'
-             a declaracao classica de background audio UWP. -->
-        <uap:Extension Category="windows.backgroundTasks"
-          EntryPoint="SpotifyXbox.BackgroundAudioTask"
-          Executable="$targetnametoken$.exe">
-          <uap:BackgroundTasks>
-            <uap:Task Type="audio" />
-          </uap:BackgroundTasks>
-        </uap:Extension>
-      </Extensions>
+      <!-- Background audio: o app usa MediaPlayer + SMTC in-process
+           (SystemMediaTransportControls via MediaPlayer.CommandManager).
+           A declaracao uap5/windows.backgroundTasks de EntryPoint
+           BackgroundAudioTask apontava pra uma classe que NAO EXISTE no
+           source — removida: sem ela o manifest valida e o SMTC continua
+           funcionando in-process. -->
     </Application>
   </Applications>
 
