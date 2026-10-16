@@ -42,14 +42,17 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <!-- background audio: media player reconhecido pelo sistema -->
-        <uap5:Extension Category="windows.backgroundTasks"
+        <!-- background audio: media player reconhecido pelo sistema.
+             A categoria backgroundTasks e' do namespace uap (schema validation
+             do makeappx rejeita em uap5 no TFM 22621). Task Type="audio" e'
+             a declaracao classica de background audio UWP. -->
+        <uap:Extension Category="windows.backgroundTasks"
           EntryPoint="SpotifyXbox.BackgroundAudioTask"
           Executable="$targetnametoken$.exe">
-          <uap5:BackgroundTasks>
-            <uap5:Task Type="audio" />
-          </uap5:BackgroundTasks>
-        </uap5:Extension>
+          <uap:BackgroundTasks>
+            <uap:Task Type="audio" />
+          </uap:BackgroundTasks>
+        </uap:Extension>
       </Extensions>
     </Application>
   </Applications>
