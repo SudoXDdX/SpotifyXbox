@@ -51,6 +51,6 @@
   </Applications>
 
   <Capabilities>
-    <uap:Capability Name="internetClient" />
+    <Capability Name="internetClient" />
   </Capabilities>
 </Package>
