@@ -30,7 +30,7 @@
 
   <Applications>
     <Application Id="App"
-      Executable="$targetnametoken$.exe"
+      Executable="SpotifyXbox.exe"
       EntryPoint="SpotifyXbox.App">
       <uap:VisualElements
         DisplayName="Spotify (SudoXD Edition)"
