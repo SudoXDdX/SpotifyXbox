@@ -70,3 +70,25 @@ jobs:
           path: |
             SpotifyXbox.appx
             sudoxd.cer
+
+      # ── Release automatica a cada build verde ──
+      - name: Update release (rolling)
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $tag = "latest"
+          $rel = gh release view $tag --repo $env:GITHUB_REPOSITORY 2>$null
+          if (-not $rel) {
+            gh release create $tag --repo $env:GITHUB_REPOSITORY `
+              --title "Spotify Xbox (build $env:GITHUB_RUN_NUMBER)" `
+              --notes "Build automatico do main. Commit: $env:GITHUB_SHA. APPX assinado self-signed (CN=SudoXD) pro Dev Mode." `
+              --latest
+          } else {
+            gh release delete $tag --repo $env:GITHUB_REPOSITORY --yes --cleanup-tag
+            gh release create $tag --repo $env:GITHUB_REPOSITORY `
+              --title "Spotify Xbox (build $env:GITHUB_RUN_NUMBER)" `
+              --notes "Build automatico do main. Commit: $env:GITHUB_SHA. APPX assinado self-signed (CN=SudoXD) pro Dev Mode." `
+              --latest
+          }
+          gh release upload $tag SpotifyXbox.appx sudoxd.cer --repo $env:GITHUB_REPOSITORY --clobber
