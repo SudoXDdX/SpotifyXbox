@@ -16,11 +16,14 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      - name: Setup MSBuild (VS)
+        uses: microsoft/setup-msbuild@v2
+
       - name: Restore
         run: dotnet restore src/SpotifyXbox.csproj
 
-      - name: Build
-        run: dotnet build src/SpotifyXbox.csproj -p:Platform=x64 -p:Configuration=Release
+      - name: Build (MSBuild do VS — tem PriGen; o dotnet build do SDK não tem)
+        run: msbuild src/SpotifyXbox.csproj -p:Platform=x64 -p:Configuration=Release -restore:false
 
       - name: Locate makeappx
         shell: powershell
